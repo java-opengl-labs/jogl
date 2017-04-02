@@ -1,0 +1,14 @@
+
+// Copyright 2012 JogAmp Community. All rights reserved.
+
+#version 330
+
+#include "semantic.glsl"
+
+
+layout (location = POSITION) in vec4 position;
+
+void main (void)
+{
+  	gl_Position = position;
+}
