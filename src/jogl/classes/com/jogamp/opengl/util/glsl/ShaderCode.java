@@ -1097,8 +1097,12 @@ public class ShaderCode {
             String line = null;
             while ((line = reader.readLine()) != null) {
                 lineno++;
-                if (line.startsWith("#include ")) {
-                    final String includeFile = line.substring(9).trim();
+                if (line.startsWith("#include ")) {                    
+                	String includeFile = line.substring(9).trim();                    
+                	// If surrounded by double quotes, remove them
+                	if (includeFile.startsWith("\"") && includeFile.endsWith("\""))
+                        includeFile = includeFile.substring(1, includeFile.length() - 1);
+                    
                     URLConnection nextConn = null;
 
                     // Try relative of current shader location
@@ -1385,15 +1389,11 @@ public class ShaderCode {
      * @see #addDefaultShaderPrecision(GL2ES2, int)
      */
     public final int defaultShaderCustomization(final GL2ES2 gl, final boolean preludeVersion, final boolean addDefaultPrecision) {
-        int pos;
-        if( preludeVersion ) {
+        int pos = 0;
+        if( preludeVersion )
             pos = addGLSLVersion(gl);
-        } else {
-            pos = 0;
-        }
-        if( addDefaultPrecision ) {
+        if( addDefaultPrecision )
             pos = addDefaultShaderPrecision(gl, pos);
-        }
         return pos;
     }
 
